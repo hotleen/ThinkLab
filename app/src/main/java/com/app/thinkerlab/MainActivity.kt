@@ -1,5 +1,6 @@
 package com.app.thinkerlab
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,6 +47,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun MessageCard(msg: Message) {
+        val context = LocalContext.current
         Row(modifier = Modifier.padding(all = 8.dp)) {
             Image(
                 painter = painterResource(R.drawable.ebike),
@@ -65,7 +68,7 @@ class MainActivity : ComponentActivity() {
              *
              */
             var isExpanded by remember { mutableStateOf(false) }
-            Column (modifier = Modifier.clickable { isExpanded = !isExpanded }) {
+            Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
                 Text(
                     msg.author,
                     color = MaterialTheme.colorScheme.secondary,
@@ -77,7 +80,12 @@ class MainActivity : ComponentActivity() {
                     Text(
                         text = msg.body,
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(all = 4.dp),
+                        modifier = Modifier
+                            .padding(all = 4.dp)
+                            .clickable {
+                                val intent = Intent(context, EBikeOverviewActivity::class.java)
+                                context.startActivity(intent)
+                            },
                         maxLines = if (isExpanded) Int.MAX_VALUE else 1,
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -121,6 +129,6 @@ class MainActivity : ComponentActivity() {
                 "251"
             ),
 
-        )
+            )
     }
 }
