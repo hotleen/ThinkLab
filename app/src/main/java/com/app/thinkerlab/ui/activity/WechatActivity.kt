@@ -1,4 +1,4 @@
-package com.app.thinkerlab
+package com.app.thinkerlab.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
