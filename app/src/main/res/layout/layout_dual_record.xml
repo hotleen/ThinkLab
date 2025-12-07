@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     android:background="#F5F5F5">
 
     <!-- 左侧视频区域 -->
@@ -12,9 +11,10 @@
         android:layout_width="300dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="8dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- 第一个视频窗口 -->
         <FrameLayout
@@ -32,21 +32,21 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="top|left"
                 android:layout_margin="6dp"
-                android:src="@drawable/icon_discovery"
-                android:layout_gravity="top|left" />
+                android:src="@drawable/icon_discovery" />
 
             <!-- 身份标签 -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="投保人"
-                android:textColor="#FFFFFF"
+                android:layout_gravity="top|right"
+                android:layout_margin="6dp"
                 android:background="#28C4A6"
                 android:padding="4dp"
-                android:textSize="12sp"
-                android:layout_gravity="top|right"
-                android:layout_margin="6dp" />
+                android:text="投保人"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
             <!-- 卡通头像（你可换成 ImageView） -->
             <ImageView
@@ -62,8 +62,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginTop="12dp"
+            android:layout_weight="1"
             android:background="@android:color/darker_gray">
 
             <TextureView
@@ -74,20 +74,20 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="top|left"
                 android:layout_margin="6dp"
-                android:src="@drawable/icon_discovery"
-                android:layout_gravity="top|left" />
+                android:src="@drawable/icon_discovery" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="销售人员"
-                android:textColor="#FFFFFF"
+                android:layout_gravity="top|right"
+                android:layout_margin="6dp"
                 android:background="#FF6E2F"
                 android:padding="4dp"
-                android:textSize="12sp"
-                android:layout_gravity="top|right"
-                android:layout_margin="6dp" />
+                android:text="销售人员"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/avatarB"
@@ -101,9 +101,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:src="@drawable/ic_tl_logo"
+            android:layout_marginTop="12dp"
             android:scaleType="fitCenter"
-            android:layout_marginTop="12dp" />
+            android:src="@drawable/ic_tl_logo" />
 
     </LinearLayout>
 
@@ -112,12 +112,12 @@
         android:id="@+id/rightPanel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/leftPanel"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="60dp"
@@ -127,17 +127,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="温馨提示"
-            android:textSize="20sp"
             android:layout_marginTop="16dp"
-            android:textColor="#333333" />
+            android:text="温馨提示"
+            android:textColor="#333333"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="双录过程中请不要轻易退出，一旦退出需重新录制"
             android:textColor="#666666"
-            android:layout_marginTop="8dp"
             android:textSize="16sp" />
 
     </LinearLayout>
