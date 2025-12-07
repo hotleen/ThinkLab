@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.app.thinkerlab.ui.activity.EBikeOverviewActivity" />
+        <activity android:name="com.app.thinkerlab.ui.activity.DualRecordActivity" />
     </application>
 
 </manifest>

@@ -22,7 +22,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -31,6 +33,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -44,6 +50,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.app.thinkerlab.R
 
 /**
@@ -52,7 +59,11 @@ import com.app.thinkerlab.R
 
 @Composable
 fun EBikePage() {
-    Column(Modifier.background(Color(0xFFF1F5F2)).statusBarsPadding()) {
+    Column(
+        Modifier
+            .background(Color(0xFFF1F5F2))
+            .statusBarsPadding()
+    ) {
         ScooterCard {
             Log.i("testHzy", "setting clicked!")
         }
@@ -472,6 +483,56 @@ fun RecentRangeCard() {
             }
         }
     }
+}
+
+@Composable
+fun MileRecordingDialog() {
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    Button(onClick = { showDialog = true }) {
+        Text("显示自定义弹框")
+    }
+
+    if (showDialog) {
+        Dialog(onDismissRequest = { showDialog = false }) {
+            Box(
+                modifier = Modifier
+                    .width(220.dp)
+                    .height(260.dp)
+                    .background(Color.White, shape = RoundedCornerShape(12.dp))
+                    .padding(16.dp)
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("记录行车距离", fontSize = 14.sp)
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Icon(imageVector = Icons.Default.Close, contentDescription = "close")
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Text("这里是自定义内容")
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Button(onClick = { showDialog = false }) {
+                        Text("关闭")
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@Composable
+@Preview
+fun PreviewMileRecordDialog() {
+    MileRecordingDialog()
 }
 
 @Composable

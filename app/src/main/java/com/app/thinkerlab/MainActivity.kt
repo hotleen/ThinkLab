@@ -2,6 +2,7 @@ package com.app.thinkerlab
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -32,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.app.thinkerlab.ui.activity.DualRecordActivity
 import com.app.thinkerlab.ui.activity.EBikeOverviewActivity
 
 class MainActivity : ComponentActivity() {
@@ -71,6 +73,11 @@ class MainActivity : ComponentActivity() {
             Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
                 Text(
                     msg.author,
+                    modifier = Modifier.clickable {
+                        Log.i("testHzy", "click text!")
+                        val intent = Intent(context, DualRecordActivity::class.java)
+                        context.startActivity(intent)
+                    },
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.titleSmall
                 )
