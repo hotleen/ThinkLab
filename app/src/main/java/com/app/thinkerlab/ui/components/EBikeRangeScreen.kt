@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -486,6 +487,121 @@ fun RecentRangeCard() {
 }
 
 @Composable
+fun RecordMileageDialog(
+    onDismiss: () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(24.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(Color.White)
+                        .padding(top = 24.dp, bottom = 24.dp)
+                ) {
+
+                    /** 顶部标题 **/
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "记录续航",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+
+                        Spacer(modifier = Modifier.width(30.dp))
+
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(26.dp)
+                                .clickable { onDismiss() }
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    /** 大数字显示 **/
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .background(Color(0xFFF0F2F5), RoundedCornerShape(16.dp))
+                            .padding(vertical = 32.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(verticalAlignment = Alignment.Bottom) {
+                            Text(
+                                "52.5",
+                                fontSize = 48.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(Modifier.width(6.dp))
+                            Text("km", fontSize = 16.sp, color = Color.Gray)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Divider(color = Color(0xFFE0E0E0), thickness = 1.dp)
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    /** 日期 **/
+                    RowItem(label = "日期:", value = "2025-11-21")
+
+                    /** 气温 **/
+                    RowItem(label = "气温:", value = "12°C")
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Spacer(modifier = Modifier.height(28.dp))
+
+                    /** 提交按钮 **/
+                    Button(
+                        onClick = { },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .height(52.dp),
+                        shape = RoundedCornerShape(30.dp)
+                    ) {
+                        Text("生成记录", fontSize = 18.sp)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun RowItem(label: String, value: String) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, fontSize = 15.sp)
+        Text(text = value, fontSize = 15.sp, color = Color(0xFF555555))
+    }
+}
+
+
+@Composable
 fun MileRecordingDialog() {
 
     var showDialog by remember { mutableStateOf(false) }
@@ -495,36 +611,7 @@ fun MileRecordingDialog() {
     }
 
     if (showDialog) {
-        Dialog(onDismissRequest = { showDialog = false }) {
-            Box(
-                modifier = Modifier
-                    .width(220.dp)
-                    .height(260.dp)
-                    .background(Color.White, shape = RoundedCornerShape(12.dp))
-                    .padding(16.dp)
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text("记录行车距离", fontSize = 14.sp)
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Icon(imageVector = Icons.Default.Close, contentDescription = "close")
-                    }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Text("这里是自定义内容")
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Button(onClick = { showDialog = false }) {
-                        Text("关闭")
-                    }
-                }
-            }
-        }
+        RecordMileageDialog { showDialog = false }
     }
 
 }
