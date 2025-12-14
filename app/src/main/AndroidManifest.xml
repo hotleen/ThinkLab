@@ -14,8 +14,9 @@
         android:roundIcon="@drawable/ic_tl_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ThinkLab"
-        tools:targetApi="31" >
-        <activity android:name="com.app.thinkerlab.MainActivity"
+        tools:targetApi="31">
+        <activity
+            android:name="com.app.thinkerlab.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.app.thinkerlab.ui.activity.EBikeOverviewActivity" />
-        <activity android:name="com.app.thinkerlab.ui.activity.DualRecordActivity" />
+        <activity
+            android:name="com.app.thinkerlab.ui.activity.DualRecordActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
