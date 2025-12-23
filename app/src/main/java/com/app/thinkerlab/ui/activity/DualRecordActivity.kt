@@ -18,18 +18,23 @@ class DualRecordActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProvider(this).get(DualRecordViewModel::class.java)
 
-        viewModel.startTimer()
-
-        viewModel.seconds.observe(this) { seconds ->
-//            Log.i("testHzy", "second value from viewModel: $seconds")
-        }
-
+        viewModel.startCallTimer()
 
         // 👇 关键代码在这里
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.callTimeText.collect { timeText ->
-                    Log.i("testHzy", "collect value: $timeText")
+                // 通话时长
+                launch {
+                    viewModel.callTimeText.collect { time ->
+                        Log.i("testHzy", "call time: $time")
+                    }
+                }
+
+                // 当前系统时间
+                launch {
+                    viewModel.currentTimeText.collect { time ->
+                        Log.i("testHzy", "current time: $time")
+                    }
                 }
             }
         }
