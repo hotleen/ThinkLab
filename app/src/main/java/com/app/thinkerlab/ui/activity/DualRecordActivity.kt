@@ -8,9 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.app.thinkerlab.R
+import com.app.thinkerlab.ui.data.VideoRepositoryProvider
 import kotlinx.coroutines.launch
 
 class DualRecordActivity : AppCompatActivity() {
+
+    private val repository by lazy {
+        VideoRepositoryProvider.repository
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,20 @@ class DualRecordActivity : AppCompatActivity() {
                     viewModel.currentTimeText.collect { time ->
                         Log.i("testHzy", "current time: $time")
                     }
+                }
+
+                // 网络质量
+                lifecycleScope.launch {
+                    repository.observeNetworkQuality()
+                        .collect { quality ->
+                        }
+                }
+
+                // 对方音量
+                lifecycleScope.launch {
+                    repository.observeRemoteVolume()
+                        .collect { volume ->
+                        }
                 }
             }
         }

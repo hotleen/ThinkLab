@@ -14,18 +14,6 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.random.Random
 
-//fun main() {
-//    initSdk(object : ICallback {
-//        override fun onSuccess(msg: String) {
-//            println("msg: $msg")`
-//        }
-//
-//        override fun onFail(err: String) {
-//            println("err: $err")
-//        }
-//    })
-//}
-
 //模拟初始化sdk
 fun initSdk(initCallback: ICallback) {
     if ((System.currentTimeMillis() % 2).toInt() == 0) {
@@ -120,7 +108,7 @@ class TradeService {
  * 3. Repository（核心）
  * ========================= */
 
-class VideoRepository(
+class VideoRepository1(
     private val tracker: Tracker,
     private val tradeService: TradeService
 ) {
@@ -283,7 +271,7 @@ sealed class NetworkQuality {
  * ========================================================= */
 
 fun main() = runBlocking {
-    val repository = VideoRepository(
+    val repository = VideoRepository1(
         tracker = ConsoleTracker(),
         tradeService = TradeService()
     )
@@ -316,22 +304,3 @@ fun main() = runBlocking {
     job1.cancel()
     job2.cancel()
 }
-
-
-/* =========================
- * 4. 上层调用（模拟 UI / main）
- * ========================= */
-
-//fun main() = runBlocking {
-//    val repository = VideoRepository(
-//        tracker = ConsoleTracker(),
-//        tradeService = TradeService()
-//    )
-//
-//    try {
-//        repository.startVideoFlow()
-//        println("✅ 视频通话流程完成")
-//    } catch (e: Exception) {
-//        println("❌ 流程失败：${e.message}")
-//    }
-//}
