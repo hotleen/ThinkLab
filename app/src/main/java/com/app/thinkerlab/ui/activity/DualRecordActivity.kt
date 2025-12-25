@@ -11,6 +11,13 @@ import com.app.thinkerlab.R
 import com.app.thinkerlab.ui.data.VideoRepositoryProvider
 import kotlinx.coroutines.launch
 
+/**
+ * Repository 里的网络质量 / 音量回调，怎么通知 Activity？
+ * 👉 单向数据流：Repository → ViewModel → Activity
+ *
+ * Activity 用户点击挂断，怎么调用 SDK？
+ * 👉 Activity → ViewModel → Repository → SDK
+ */
 class DualRecordActivity : AppCompatActivity() {
 
     private val repository by lazy {
