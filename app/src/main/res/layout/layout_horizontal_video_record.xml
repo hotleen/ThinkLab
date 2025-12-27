@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- 顶部状态栏 -->
     <LinearLayout
         android:id="@+id/video_status_bar"
         android:layout_width="match_parent"
@@ -11,9 +13,9 @@
         android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <View
             android:layout_width="5dp"
@@ -30,7 +32,7 @@
             android:layout_marginEnd="15dp"
             android:text="00:00:00"
             android:textColor="#FF1D2C4E"
-            android:textSize="12dp" />
+            android:textSize="12sp" /> <!-- 修改：dp -> sp -->
 
         <TextView
             android:id="@+id/tv_current_time"
@@ -40,9 +42,10 @@
             android:textColor="#1D2C4E"
             android:textSize="12sp" />
 
+        <!-- 修改点：weight 占位 View，高度必须是 match_parent -->
         <View
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <TextView
@@ -50,9 +53,9 @@
             android:layout_height="16dp"
             android:background="@color/teal_200"
             android:text="上一步"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#FFFFFFFF"
-            android:textSize="10dp" />
+            android:textSize="10sp" /> <!-- 修改：dp -> sp -->
 
         <TextView
             android:layout_width="38dp"
@@ -61,25 +64,23 @@
             android:layout_marginEnd="30dp"
             android:background="#F44336"
             android:text="退出"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textColor="#FFFFFFFF"
-            android:textSize="10dp" />
+            android:textSize="10sp" /> <!-- 修改：dp -> sp -->
 
     </LinearLayout>
 
+    <!-- 左侧视频面板 -->
     <LinearLayout
         android:id="@+id/leftPanel"
         android:layout_width="197dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/video_status_bar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rightPanel"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/video_status_bar"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintEnd_toStartOf="@id/rightPanel">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -100,7 +101,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top|right"
+                    android:layout_gravity="top|end"
                     android:background="@color/purple_500"
                     android:padding="4dp"
                     android:text="投保人"
@@ -110,11 +111,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
+                    android:layout_gravity="bottom|center_horizontal"
                     android:ellipsize="end"
                     android:paddingBottom="4.5dp"
                     android:text="投保人/被投保人(张三)"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#FFFFFFFF"
                     android:textSize="11sp" />
             </androidx.cardview.widget.CardView>
@@ -140,24 +141,23 @@
                 <TextView
                     android:layout_width="56dp"
                     android:layout_height="18dp"
-                    android:layout_gravity="top|right"
+                    android:layout_gravity="top|end"
                     android:background="#E20C3A"
                     android:paddingStart="6dp"
+                    android:gravity="center_vertical"
                     android:text="销售人员"
-                    android:textAlignment="gravity"
                     android:textColor="#FFFFFFFF"
                     android:textSize="11sp" />
-
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|center"
+                    android:layout_gravity="bottom|center_horizontal"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingBottom="4.5dp"
                     android:text="销售人员"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#FFFFFFFF"
                     android:textSize="11sp" />
             </androidx.cardview.widget.CardView>
@@ -165,19 +165,17 @@
 
     </LinearLayout>
 
+    <!-- 右侧区域 -->
     <LinearLayout
         android:id="@+id/rightPanel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@id/leftPanel"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/video_status_bar"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/leftPanel"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <RelativeLayout
             android:id="@+id/third_web_relative"
