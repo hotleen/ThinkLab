@@ -1,18 +1,17 @@
 package com.app.thinkerlab.ui.components
 
-import androidx.compose.animation.core.EaseInOutCubic
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -26,18 +25,50 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.app.thinkerlab.R
+import com.app.thinkerlab.ui.graphic.SunIcon
 import ir.ehsannarmani.compose_charts.LineChart
-import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.DotProperties
-import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.Line
+
+@Composable
+fun EBikeMileagePage(recordList: List<RideRecord>) {
+    LazyColumn {
+        item {
+            EBikeHeader()
+        }
+        item {
+            MonthSelector()
+        }
+
+        items(items = recordList, key = { it.id }) { record ->
+            RideRecordCard(record)
+        }
+    }
+
+}
+
+@Composable
+@Preview(showBackground = true)
+fun EBikePagePreview() {
+    val recordList = listOf(
+        RideRecord("1", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("2", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("3", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("4", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("5", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("6", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("7", "11-20", "周四", 52.5, 15, "单人"),
+    )
+    EBikeMileagePage(recordList)
+}
 
 @Preview(showBackground = true)
 @Composable
@@ -103,19 +134,16 @@ fun MonthSelector() {
     }
 }
 
-@Preview
-@Composable
-fun PreviewRideRecordCard() {
-    RideRecordCard(RideRecord("11-20", "周四", 52.5, 15, "单人"))
-}
-
 @Composable
 fun RideRecordCard(item: RideRecord) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
 
@@ -129,7 +157,7 @@ fun RideRecordCard(item: RideRecord) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("${item.temp}°C", fontSize = 14.sp)
                     Spacer(Modifier.width(6.dp))
-                    Icon(Icons.Default.Star, contentDescription = null)
+                    Icon(SunIcon, contentDescription = null)
                 }
             }
 
@@ -151,30 +179,12 @@ fun RideRecordCard(item: RideRecord) {
 
 
 data class RideRecord(
+    val id: String,
     val date: String,
     val weekday: String,
     val km: Double,
     val temp: Int,
     val type: String,
-    val tag: RideTag? = null
-)
-
-data class RideTag(
-    val title: String,
-    val bgColor: Color
-)
-
-val sampleData = listOf(
-    RideRecord("11-20", "周四", 52.5, 15, "单人"),
-    RideRecord(
-        "11-15", "周五", 30.2, -2, "多人",
-        tag = RideTag("打破新高", Color(0xFFF7B500))
-    ),
-    RideRecord(
-        "11-15", "周五", 30.2, -2, "多人",
-        tag = RideTag("成绩下滑", Color(0xFFE85C5C))
-    ),
-    RideRecord("11-10", "周一", 48.0, 10, "单人")
 )
 
 
