@@ -52,6 +52,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.app.thinkerlab.R
 
 /**
@@ -59,7 +61,7 @@ import com.app.thinkerlab.R
  */
 
 @Composable
-fun EBikePage() {
+fun EBikePage(navController: NavController) {
     Column(
         Modifier
             .background(Color(0xFFF1F5F2))
@@ -69,7 +71,10 @@ fun EBikePage() {
             Log.i("testHzy", "setting clicked!")
         }
         RightChartCard()
-        MileageCard()
+        MileageCard {
+            Log.i("testHzy", "card clicked!")
+            navController.navigate("EBikeMileageScreen")
+        }
         FooterCard()
     }
 }
@@ -171,7 +176,7 @@ fun FooterCard() {
 
 @Composable
 fun ScooterCard(
-    title: String = "我的小电驴（爱玛 卫士）", onSettingsClick: () -> Unit = {}
+    title: String = "我的小电驴（爱玛 卫士）", onMileageCardClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
@@ -209,7 +214,7 @@ fun ScooterCard(
             )
 
             IconButton(
-                onClick = onSettingsClick, modifier = Modifier.size(24.dp)
+                onClick = onMileageCardClick, modifier = Modifier.size(24.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings, contentDescription = "settings"
@@ -365,7 +370,7 @@ fun MileTrendCard() {
 }
 
 @Composable
-fun MileageCard() {
+fun MileageCard(onMileageCardClick: () -> Unit = {}) {
     //card背景色区域不包括
     Card(
         modifier = Modifier
@@ -375,7 +380,8 @@ fun MileageCard() {
             containerColor = Color(0xFFF8F9FB)
         ),
         shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        onClick = onMileageCardClick
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
 
@@ -625,7 +631,8 @@ fun PreviewMileRecordDialog() {
 @Composable
 @Preview
 fun PreviewPage() {
-    EBikePage()
+    val navController = rememberNavController()
+    EBikePage(navController)
 }
 
 @Composable
@@ -649,7 +656,9 @@ fun PreviewMileTrend() {
 @Composable
 @Preview
 fun PreviewMiles() {
-    MileageCard()
+    MileageCard {
+        Log.i("testHzy", "preview card clicked!")
+    }
 }
 
 @Composable

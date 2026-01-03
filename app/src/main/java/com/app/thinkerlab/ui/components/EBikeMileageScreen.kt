@@ -1,6 +1,8 @@
 package com.app.thinkerlab.ui.components
 
+import android.service.autofill.OnClickAction
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,6 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.app.thinkerlab.R
 import com.app.thinkerlab.ui.graphic.SunIcon
 import ir.ehsannarmani.compose_charts.LineChart
@@ -39,10 +44,26 @@ import ir.ehsannarmani.compose_charts.models.DotProperties
 import ir.ehsannarmani.compose_charts.models.Line
 
 @Composable
-fun EBikeMileagePage(recordList: List<RideRecord>) {
-    LazyColumn {
+fun EBikeMileageRouter(navController: NavController) {
+    val recordList = listOf(
+        RideRecord("1", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("2", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("3", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("4", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("5", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("6", "11-20", "周四", 52.5, 15, "单人"),
+        RideRecord("7", "11-20", "周四", 52.5, 15, "单人"),
+    )
+    EBikeMileagePage(navController, recordList)
+}
+
+@Composable
+fun EBikeMileagePage(navController: NavController, recordList: List<RideRecord>) {
+    LazyColumn(modifier = Modifier.statusBarsPadding()) {
         item {
-            EBikeHeader()
+            EBikeHeader {
+                navController.popBackStack()
+            }
         }
         item {
             MonthSelector()
@@ -67,12 +88,13 @@ fun EBikePagePreview() {
         RideRecord("6", "11-20", "周四", 52.5, 15, "单人"),
         RideRecord("7", "11-20", "周四", 52.5, 15, "单人"),
     )
-    EBikeMileagePage(recordList)
+    val navController = rememberNavController()
+    EBikeMileagePage(navController, recordList)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun EBikeHeader() {
+fun EBikeHeader(onBack: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,7 +103,10 @@ fun EBikeHeader() {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = "back",
+            modifier = Modifier.clickable { onBack() })
 
         Text(text = "里程记录")
 
