@@ -3,6 +3,8 @@ package com.app.thinkerlab.ui.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +33,23 @@ class DualRecordActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this).get(DualRecordViewModel::class.java)
 
         viewModel.startCallTimer()
+
+        val rootView = window.decorView.rootView
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { _, insets ->
+            //rightInset单位是px，需要转会为dp
+
+            val rightInset = maxOf(
+                insets.getInsets(WindowInsetsCompat.Type.systemGestures()).right,
+                insets.getInsets(WindowInsetsCompat.Type.navigationBars()).right
+            )
+            val px = rightInset
+            val density = resources.displayMetrics.density
+            val dp = px / density
+
+            Log.i("testHzy", "right inInset:  $rightInset")
+            insets
+        }
+
 
         // 👇 关键代码在这里
         lifecycleScope.launch {
