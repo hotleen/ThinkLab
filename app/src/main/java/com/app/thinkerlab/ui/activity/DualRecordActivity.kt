@@ -46,6 +46,8 @@ class DualRecordActivity : AppCompatActivity() {
             val density = resources.displayMetrics.density
             val dp = px / density
 
+            // 👉 只给“交互控件”加 padding
+
             Log.i("testHzy", "right inInset:  $rightInset")
             insets
         }

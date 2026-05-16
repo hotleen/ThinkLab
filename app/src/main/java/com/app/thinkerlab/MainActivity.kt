@@ -2,6 +2,7 @@ package com.app.thinkerlab
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -90,8 +91,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .padding(all = 4.dp)
                             .clickable {
-                                val intent = Intent(context, EBikeOverviewActivity::class.java)
-                                context.startActivity(intent)
+                                if (TextUtils.equals("101", msg.body)) {
+                                    Log.i("testHzy", "msg: ${msg.body}")
+                                } else {
+                                    val intent = Intent(context, EBikeOverviewActivity::class.java)
+                                    context.startActivity(intent)
+                                }
                             },
                         maxLines = if (isExpanded) Int.MAX_VALUE else 1,
                         style = MaterialTheme.typography.bodyMedium
