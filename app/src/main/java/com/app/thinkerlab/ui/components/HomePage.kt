@@ -41,7 +41,7 @@ data class FinancialService(
 )
 
 @Composable
-fun HomePage(modifier: Modifier = Modifier) {
+fun HomePage(modifier: Modifier = Modifier, onCloudDriveClick: () -> Unit = {}) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -50,7 +50,7 @@ fun HomePage(modifier: Modifier = Modifier) {
     ) {
         item { TopNavBar() }
         item { BannerCard() }
-        item { FeatureGridSection() }
+        item { FeatureGridSection(onCloudDriveClick) }
         item { RecentUsageSection() }
         item { FinancialServicesSection() }
         item { Spacer(modifier = Modifier.height(8.dp)) }
@@ -183,7 +183,7 @@ private fun BannerCard() {
 }
 
 @Composable
-private fun FeatureGridSection() {
+private fun FeatureGridSection(onCloudDriveClick: () -> Unit = {}) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -200,7 +200,7 @@ private fun FeatureGridSection() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                FeatureGridItem("扫一扫", Color(0xFF4A90D9), "扫")
+                FeatureGridItem("云盘", Color(0xFF4A90D9), "云", onClick = onCloudDriveClick)
                 FeatureGridItem("付款", Color(0xFF1AAD19), "付")
                 FeatureGridItem("钱包", Color(0xFFF5A623), "钱")
                 FeatureGridItem("转账", Color(0xFF7B68EE), "转")
@@ -219,10 +219,10 @@ private fun FeatureGridSection() {
 }
 
 @Composable
-private fun FeatureGridItem(name: String, color: Color, char: String) {
+private fun FeatureGridItem(name: String, color: Color, char: String, onClick: () -> Unit = {}) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable { /* TODO */ }
+        modifier = Modifier.clickable { onClick() }
     ) {
         Box(
             modifier = Modifier
